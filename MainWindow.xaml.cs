@@ -44,13 +44,23 @@ namespace hacker_typer_simulator
             cursorTimer.Start();
         }
 
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Open settings", "Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
         private void CursorTimer_Tick(object? sender, EventArgs e)
         {
             BlinkCursor.Visibility =
                 BlinkCursor.Visibility == Visibility.Visible
                 ? Visibility.Hidden
                 : Visibility.Visible;
-        }
+        }
 
         // Captures the KeyDown event to append the next character from the simulation text
         private void Window_KeyDown(object sender, KeyEventArgs e)
