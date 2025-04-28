@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace hacker_typer_simlulator
+namespace hacker_typer_simulator
 {
     /// <summary>
     /// Interaction logic for App.xaml

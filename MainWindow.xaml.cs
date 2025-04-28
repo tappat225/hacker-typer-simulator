@@ -1,4 +1,4 @@
-﻿using hacker_typer_simlulator;
+﻿using hacker_typer_simulator;
 using System;
 using System.Globalization;
 using System.IO;

@@ -1,7 +1,7 @@
-﻿<Application x:Class="hacker_typer_simlulator.App"
+﻿<Application x:Class="hacker_typer_simulator.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:hacker_typer_simlulator"
+             xmlns:local="clr-namespace:hacker_typer_simulator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

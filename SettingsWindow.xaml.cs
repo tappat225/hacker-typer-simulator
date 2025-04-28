@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace hacker_typer_simlulator
+namespace hacker_typer_simulator
 {
     public partial class SettingsWindow : Window
     {
