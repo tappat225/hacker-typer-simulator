@@ -32,29 +32,28 @@
            HorizontalAlignment="Left"/>
 
         <!-- Bottom Bar -->
-        <DockPanel Grid.Row="1" Background="#80000000">
-            <!-- Semi-transparent gray -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5">
-                <!-- Settings Button -->
-                <Button Content="Settings"
+        <DockPanel Grid.Row="1" Background="#80000000" LastChildFill="False">
+            <Button Content="Settings"
                 Width="80"
                 Height="30"
                 Margin="5"
                 Foreground="Lime"
                 Background="#40000000"
                 BorderBrush="Transparent"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
                 Click="SettingsButton_Click"/>
 
-                <!-- Exit Button -->
-                <Button Content="Exit"
-                    Width="80"
-                    Height="30"
-                    Margin="5"
-                    Foreground="Lime"
-                    Background="#40000000"
-                    BorderBrush="Transparent"
-                    Click="ExitButton_Click"/>
-            </StackPanel>
+            <Button Content="Exit"
+                Width="80"
+                Height="30"
+                Margin="5"
+                Foreground="Lime"
+                Background="#40000000"
+                BorderBrush="Transparent"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Click="ExitButton_Click"/>
         </DockPanel>
     </Grid>
 </Window>

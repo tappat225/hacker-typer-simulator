@@ -1,0 +1,10 @@
+﻿<Window x:Class="hacker_typer_simlulator.SettingsWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Settings" Height="200" Width="300">
+    <Grid>
+        <Label Content="UserName: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+        <TextBox x:Name="UsernameTextBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,30,0,0" Width="260"/>
+        <Button Content="Save" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Width="80" Click="SaveButton_Click"/>
+    </Grid>
+</Window>
