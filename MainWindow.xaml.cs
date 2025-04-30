@@ -16,11 +16,21 @@ namespace hacker_typer_simulator
         private int currentIndex = 0;
         private readonly DispatcherTimer cursorTimer;
         private string username = "tappat0xE1"; // Default username
+        private bool isFullScreen = false;
 
         public MainWindow()
         {
             InitializeComponent();
             TerminalTextBlock.Text = "";
+            //this.AllowsTransparency = false;
+
+            SetDefalutWindowStyle();
+
+            // Remove the window's border and make it non-resizable
+            //this.WindowStyle = WindowStyle.None;
+            ////this.ResizeMode = ResizeMode.NoResize;
+            //this.ResizeMode = ResizeMode.CanResizeWithGrip;
+            //this.Background = Brushes.Black;
 
             // Read command from a file or use default commands
             string filePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "simulationContent.txt");
@@ -46,6 +56,13 @@ namespace hacker_typer_simulator
             cursorTimer.Start();
         }
 
+        private void SetDefalutWindowStyle()
+        {
+            this.WindowStyle = WindowStyle.None;
+            this.ResizeMode = ResizeMode.CanResize;
+            this.Background = Brushes.Black;
+        }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             SettingsWindow settingsWindow = new SettingsWindow(username);
@@ -61,6 +78,7 @@ namespace hacker_typer_simulator
             Application.Current.Shutdown();
         }
 
+        // Toggles the visibility of the cursor every 500 milliseconds
         private void CursorTimer_Tick(object? sender, EventArgs e)
         {
             BlinkCursor.Visibility =
@@ -72,6 +90,23 @@ namespace hacker_typer_simulator
         // Captures the KeyDown event to append the next character from the simulation text
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Escape && isFullScreen)
+            {
+                this.WindowState = WindowState.Normal;
+                //this.WindowStyle = WindowStyle.None;
+                //this.ResizeMode = ResizeMode.CanResizeWithGrip;
+                SetDefalutWindowStyle();
+                isFullScreen = false;
+
+                // Make suire that the window is in normal state
+                this.Activate();
+
+                Keyboard.Focus(TerminalTextBlock);
+
+                e.Handled = true;
+                return;
+            }
+
             AppendNextCharacter();
             e.Handled = true;
         }
@@ -127,5 +162,18 @@ namespace hacker_typer_simulator
                 UpdateCursorPosition();
             }
         }
+
+        private void FullScreenButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isFullScreen)
+            {
+                this.WindowState = WindowState.Maximized;
+                //this.WindowStyle = WindowStyle.None;
+                //this.ResizeMode = ResizeMode.CanResizeWithGrip;
+                SetDefalutWindowStyle();
+                isFullScreen = true;
+            }
+        }
+
     }
 }
